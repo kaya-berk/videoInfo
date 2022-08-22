@@ -3,14 +3,16 @@
 
 #include <string>
 #include <vector>
+using namespace std;
+
 class VideoInfo
 {
 public:
 	VideoInfo();
-	int video_info(const char* filename1);
-	std::vector<std::string> getmissingLinks();
+	int videoInfo(string filename1);
+	vector<string> getMissingLinks();
 private:
-	std::vector<std::string> vectorML;
+	vector<string> vectorML;
 };
 
 #endif // VIDEOINFO_H
