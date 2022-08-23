@@ -5,6 +5,7 @@
 #include <string>
 #include "videoinfo.h"
 
+
 using namespace std;
 
 extern "C" {
@@ -19,8 +20,11 @@ void log_callback(void *, int, const char *, va_list){
 int main(int argc, const char** argv) {
 
 	int count = 1;
+	string filePath;
+	printf("Enter the file path: ");
+	getline(cin,filePath);
 
-	ifstream newfile("/home/mak/camRecords");
+	ifstream newfile = ifstream(filePath,ios_base::in);
 	av_log_set_callback(log_callback);
 	if(newfile.is_open()){
 		string rtsp;
