@@ -5,7 +5,6 @@
 #include <string>
 #include "videoinfo.h"
 
-
 using namespace std;
 
 extern "C" {
@@ -17,12 +16,12 @@ void log_callback(void *, int, const char *, va_list){
 
 }
 
-int main(int argc, const char** argv) {
+int main(int argc, char** argv) {
 
 	int count = 1;
 	string filePath;
-	printf("Enter the file path: ");
-	getline(cin,filePath);
+	filePath=argv[1];
+	filePath.erase(0,2);
 
 	ifstream newfile = ifstream(filePath,ios_base::in);
 	av_log_set_callback(log_callback);
