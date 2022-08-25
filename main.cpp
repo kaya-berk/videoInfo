@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include "videoinfo.h"
+#include <map>
 
 using namespace std;
 
@@ -18,19 +19,23 @@ void log_callback(void *, int, const char *, va_list){
 
 int main(int argc, char** argv) {
 
-	int count = 1;
-	static string value;
 	static string key;
+	static string value;
+	int count = 1;
 	int start = 0;
-	for(int i = 0; i < argc; i++)
-	{
+	map <string, string> fileNpth;
+	int i = 0;
+
+	while(i<argc){
 		string argStr(argv[i]);
 		int start = argStr.find("=");
 		key = argStr.substr(0, start);
-		value = argStr.erase(0, (start+1));
-		if(start > 0)
+		value = argStr.substr((start+1),argStr.length());
+		fileNpth.insert(pair<string, string>(key, value));
+		i++;
+		if(start>0)
 			break;
-	}
+		}
 
 	ifstream newfile = ifstream(value,ios_base::in);
 	av_log_set_callback(log_callback);
@@ -54,4 +59,3 @@ int main(int argc, char** argv) {
 	newfile.close();
 	return 0;
 }
-
