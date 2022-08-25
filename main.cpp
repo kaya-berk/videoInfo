@@ -19,11 +19,20 @@ void log_callback(void *, int, const char *, va_list){
 int main(int argc, char** argv) {
 
 	int count = 1;
-	string filePath;
-	filePath=argv[1];
-	filePath.erase(0,2);
+	static string value;
+	static string key;
+	int start = 0;
+	for(int i = 0; i < argc; i++)
+	{
+		string argStr(argv[i]);
+		int start = argStr.find("=");
+		key = argStr.substr(0, start);
+		value = argStr.erase(0, (start+1));
+		if(start > 0)
+			break;
+	}
 
-	ifstream newfile = ifstream(filePath,ios_base::in);
+	ifstream newfile = ifstream(value,ios_base::in);
 	av_log_set_callback(log_callback);
 	if(newfile.is_open()){
 		string rtsp;
