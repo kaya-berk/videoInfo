@@ -27,9 +27,9 @@ static map<string, string> argumentParser(int argc, char **argv)
 		string key;
 		string value;
 		string argStr(argv[i]);
-		start = argStr.find("=");
-		key = argStr.substr(0, start);
-		value = argStr.substr((start+1),argStr.length());
+		start = argStr.find("--file");
+		key = argStr.substr(0, (start+6));
+		value = argStr.substr((start+7),argStr.length());
 		parseArgs.insert(pair<string, string>(key, value));
 		i++;
 		if(start>0)
