@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <map>
+
 using namespace std;
 
 extern "C" {
@@ -60,5 +62,3 @@ vector<string> VideoInfo::getMissingLinks(){
 
 	return vectorML;
 };
-
-

@@ -12,6 +12,7 @@ public:
 	int videoInfo(string filename1);
 	vector<string> getMissingLinks();
 private:
+	string argumentInfo();
 	vector<string> vectorML;
 };
 

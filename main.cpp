@@ -17,13 +17,13 @@ void log_callback(void *, int, const char *, va_list){
 
 }
 
-int main(int argc, char** argv) {
-
-	static string key;
-	static string value;
+static map<string, string> argumentParser(int argc, char **argv)
+{
+	map<string, string> parseArgs;
+	string key;
+	string value;
 	int count = 1;
 	int start = 0;
-	map <string, string> fileNpth;
 	int i = 0;
 
 	while(i<argc){
@@ -31,13 +31,29 @@ int main(int argc, char** argv) {
 		int start = argStr.find("=");
 		key = argStr.substr(0, start);
 		value = argStr.substr((start+1),argStr.length());
-		fileNpth.insert(pair<string, string>(key, value));
+		parseArgs.insert(pair<string, string>(key, value));
 		i++;
 		if(start>0)
 			break;
 		}
+	return parseArgs;
+}
 
-	ifstream newfile = ifstream(value,ios_base::in);
+int main(int argc, char** argv)
+{
+	int count = 1;
+
+	map<string, string> args = argumentParser(argc, argv);
+
+	if (!args.count("--file")) {
+		cout << "Missing parameter Please use --file ";
+		return 0;
+	}
+
+	string filePath2 = args["--file"];
+	//string expectedFPS = args["fps"];
+	//expectedFPS = "25.0";
+	ifstream newfile = ifstream(filePath2,ios_base::in);
 	av_log_set_callback(log_callback);
 	if(newfile.is_open()){
 		string rtsp;
@@ -48,7 +64,6 @@ int main(int argc, char** argv) {
 			cout <<"RTSP Link: " << count <<"\n";
 			vi.videoInfo(rtsp);
 			count++;
-
 			}
 			vector<string> vec = vi.getMissingLinks();
 			cout << "Missing Links: " << "\n";
