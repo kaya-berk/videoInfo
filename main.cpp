@@ -17,24 +17,27 @@ void log_callback(void *, int, const char *, va_list){
 
 }
 
-static map<string, string> argumentParser(int argc, char **argv)
+static map<string,string> argumentParser(int argc, char **argv)
 {
-	map<string, string> parseArgs;
+	map<string,string> parseArgs;
 	int i = 0;
-
+	int dum = 0;
 	while(i<argc){
-		int start = 0;
 		string key;
 		string value;
 		string argStr(argv[i]);
-		start = argStr.find("--file");
-		key = argStr.substr(0, (start+6));
-		value = argStr.substr((start+7),argStr.length());
-		parseArgs.insert(pair<string, string>(key, value));
-		i++;
-		if(start>0)
-			break;
+		dum = argStr.find("=");
+		if(dum>0){
+			key=argStr.substr(0,(dum));
+			value=argStr.substr((dum+1),argStr.length());
 		}
+		else
+		{
+			key=argStr;
+		}
+		parseArgs.insert(pair<string,string>(key,value));
+		i++;
+	}
 	return parseArgs;
 }
 
@@ -42,7 +45,7 @@ int main(int argc, char** argv)
 {
 	int count = 1;
 
-	map<string, string> args = argumentParser(argc, argv);
+	map<string,string> args = argumentParser(argc, argv);
 
 	if (!args.count("--file")) {
 		cout << "Missing parameter Please use --file ";
