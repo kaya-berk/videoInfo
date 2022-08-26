@@ -20,15 +20,14 @@ void log_callback(void *, int, const char *, va_list){
 static map<string, string> argumentParser(int argc, char **argv)
 {
 	map<string, string> parseArgs;
-	string key;
-	string value;
-	int count = 1;
-	int start = 0;
 	int i = 0;
 
 	while(i<argc){
+		int start = 0;
+		string key;
+		string value;
 		string argStr(argv[i]);
-		int start = argStr.find("=");
+		start = argStr.find("=");
 		key = argStr.substr(0, start);
 		value = argStr.substr((start+1),argStr.length());
 		parseArgs.insert(pair<string, string>(key, value));
@@ -53,6 +52,7 @@ int main(int argc, char** argv)
 	string filePath2 = args["--file"];
 	//string expectedFPS = args["fps"];
 	//expectedFPS = "25.0";
+
 	ifstream newfile = ifstream(filePath2,ios_base::in);
 	av_log_set_callback(log_callback);
 	if(newfile.is_open()){
