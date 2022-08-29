@@ -59,9 +59,12 @@ int main(int argc, char** argv)
 	ifstream newfile = ifstream(filePath2, ios_base::in);
 	av_log_set_callback(log_callback);
 
+	static VideoInfo vi;
+	static vector<string> vec;
+
 	if(newfile.is_open()){
 		string rtsp;
-		VideoInfo vi;
+		static VideoInfo vi;
 
 		while(getline(newfile, rtsp)) {
 			cout << rtsp << "\n";
@@ -70,14 +73,23 @@ int main(int argc, char** argv)
 			count++;
 			}
 
-			vector<string> vec = vi.getMissingLinks();
+			vec = vi.getMissingLinks();
 			cout << "Missing Links: " << "\n";
 			for(int i = 0; i<vec.size(); i++){
 				cout <<vec.at(i) << "\n";
 			}
 		}
-
 	newfile.close();
+
+	ofstream missingLinksFile("/home/mak/missingLinks.txt", ofstream::out);
+
+	if(missingLinksFile.is_open()){
+		for(int i = 0; i<vec.size(); i++)
+		{
+			missingLinksFile << vec[i] << " ERROR CAUSE : Connection to tcp://10.5.5.71:554?timeout=0 failed: No route to host rtsp://root:Sparse11@10.5.5.71/stream/profile1=r: No route to host" <<endl;
+		}
+		missingLinksFile.close();
+	}
 
 	return 0;
 }
