@@ -20,7 +20,7 @@ int VideoInfo::videoInfo(string filename)
 
 	AVFormatContext* pFormatCtx = NULL;
 	pFormatCtx = avformat_alloc_context();
-	AVCodecContext* pCodecCtx=NULL;
+	AVCodecContext* pCodecCtx = NULL;
 
 	int ret = avformat_open_input(&pFormatCtx, filename.data(), NULL, NULL);
 	if (ret < 0){
@@ -40,7 +40,7 @@ int VideoInfo::videoInfo(string filename)
 	printf("Duration: %" PRId64 "\n", duration);
 
 	double videoFPS = av_q2d(pFormatCtx->streams[ret2]->r_frame_rate);
-	cout <<"fps :"<<videoFPS<< "\n";
+	cout << "fps :"<<videoFPS<< "\n";
 
 	pCodecCtx = pFormatCtx->streams[ret2]->codec;
 	printf("Width : %d\n", pCodecCtx->width);

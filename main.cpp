@@ -28,16 +28,16 @@ static map<string, string> argumentParser(int argc, char **argv)
 		string argStr(argv[i]);
 		dum = argStr.find("=");
 
-		if(dum>0){
-			key=argStr.substr(0,(dum));
-			value=argStr.substr((dum+1),argStr.length());
+		if(dum > 0){
+			key = argStr.substr(0, (dum));
+			value = argStr.substr((dum+1), argStr.length());
 		}
 		else
 		{
-			key=argStr;
+			key = argStr;
 		}
 
-		parseArgs.insert(pair<string,string>(key,value));
+		parseArgs.insert(pair<string, string>(key, value));
 		i++;
 	}
 	return parseArgs;
@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 {
 	int count = 1;
 
-	map<string,string> args = argumentParser(argc, argv);
+	map<string, string> args = argumentParser(argc, argv);
 
 	if (!args.count("--file")) {
 		cout << "Missing parameter Please use --file ";
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 
 	string filePath2 = args["--file"];
 
-	ifstream newfile = ifstream(filePath2,ios_base::in);
+	ifstream newfile = ifstream(filePath2, ios_base::in);
 	av_log_set_callback(log_callback);
 
 	if(newfile.is_open()){
