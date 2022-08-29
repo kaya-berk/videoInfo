@@ -12,10 +12,7 @@ extern "C" {
 #include <libavcodec/avcodec.h>
 }
 
-VideoInfo::VideoInfo()
-{
-
-}
+VideoInfo::VideoInfo(){ }
 
 int VideoInfo::videoInfo(string filename)
 {

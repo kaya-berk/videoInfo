@@ -13,20 +13,21 @@ extern "C" {
 #include <libavcodec/avcodec.h>
 }
 
-void log_callback(void *, int, const char *, va_list){
+void log_callback(void *, int, const char *, va_list){ }
 
-}
-
-static map<string,string> argumentParser(int argc, char **argv)
+static map<string, string> argumentParser(int argc, char **argv)
 {
-	map<string,string> parseArgs;
+	map<string, string> parseArgs;
+
 	int i = 0;
 	int dum = 0;
-	while(i<argc){
+
+	while(i < argc){
 		string key;
 		string value;
 		string argStr(argv[i]);
 		dum = argStr.find("=");
+
 		if(dum>0){
 			key=argStr.substr(0,(dum));
 			value=argStr.substr((dum+1),argStr.length());
@@ -35,6 +36,7 @@ static map<string,string> argumentParser(int argc, char **argv)
 		{
 			key=argStr;
 		}
+
 		parseArgs.insert(pair<string,string>(key,value));
 		i++;
 	}
@@ -53,11 +55,10 @@ int main(int argc, char** argv)
 	}
 
 	string filePath2 = args["--file"];
-	//string expectedFPS = args["fps"];
-	//expectedFPS = "25.0";
 
 	ifstream newfile = ifstream(filePath2,ios_base::in);
 	av_log_set_callback(log_callback);
+
 	if(newfile.is_open()){
 		string rtsp;
 		VideoInfo vi;
@@ -68,12 +69,15 @@ int main(int argc, char** argv)
 			vi.videoInfo(rtsp);
 			count++;
 			}
+
 			vector<string> vec = vi.getMissingLinks();
 			cout << "Missing Links: " << "\n";
 			for(int i = 0; i<vec.size(); i++){
 				cout <<vec.at(i) << "\n";
 			}
 		}
+
 	newfile.close();
+
 	return 0;
 }
